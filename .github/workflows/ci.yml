@@ -51,15 +51,20 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+            script: |
+                     AWS_REGION="${{ secrets.AWS_REGION }}"
+                     AWS_ACCOUNT_ID="${{ secrets.AWS_ACCOUNT_ID }}"
+                     ECR_REPOSITORY="student-app"
 
-            docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
+                      aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
 
-            docker stop student-app || true
-            docker rm student-app || true
+                      docker pull "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest"
 
-            docker run -d \
-              --name student-app \
-              -p 3000:3000 \
-              --restart unless-stopped \
-              $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest
+                      docker stop student-app || true
+                      docker rm student-app || true
+
+                       docker run -d \
+                       --name student-app \
+                       -p 3000:3000 \
+                       --restart unless-stopped \
+                     "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest"
