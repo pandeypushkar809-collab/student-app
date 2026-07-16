@@ -5,5 +5,5 @@ metadata:
   name: student-app-config
 
 data:
-  APP_NAME: "Student App Using ConfigMap"
+  APP_NAME: "Welcome Pushkar"
   PORT: "3000"
