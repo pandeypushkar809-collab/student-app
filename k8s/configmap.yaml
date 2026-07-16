@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: student-app-config
+
+data:
+  APP_NAME: "Student App Using ConfigMap"
+  PORT: "3000"
