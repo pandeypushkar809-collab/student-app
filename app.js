@@ -2,10 +2,13 @@ const express = require("express");
 
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+const APP_NAME = process.env.APP_NAME || "Student App Default";
+
 app.get("/", (req, res) => {
-    res.send("Hello Devops");
+    res.send(APP_NAME);
 });
 
-app.listen(3000, () => {
-    console.log("Server started on port 3000");
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
