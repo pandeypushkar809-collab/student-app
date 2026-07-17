@@ -19,7 +19,14 @@ spec:
     spec:
       containers:
         - name: student-app
-          image: student-app:v1
+          image: student-app:v4
           imagePullPolicy: IfNotPresent
+
           ports:
             - containerPort: 3000
+
+          envFrom:
+            - configMapRef:
+                name: student-app-config
+            - secretRef:
+                name: student-app-secret
