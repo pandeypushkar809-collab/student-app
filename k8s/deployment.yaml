@@ -30,3 +30,12 @@ spec:
                 name: student-app-config
             - secretRef:
                 name: student-app-secret
+
+          volumeMounts:
+            - name: student-storage
+              mountPath: /app/data
+
+      volumes:
+        - name: student-storage
+          persistentVolumeClaim:
+            claimName: student-app-pvc
